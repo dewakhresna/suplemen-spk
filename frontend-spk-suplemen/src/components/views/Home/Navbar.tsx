@@ -1,45 +1,53 @@
-import { Building2 } from "lucide-react";
+import { Button } from "@heroui/react";
+import { HeartPulse, ShoppingCart } from "lucide-react";
 import Link from "next/link";
-import { useRouter } from "next/router";
 import AuthMenu from "../Auth/AuthMenu/AuthMenu";
+import { useRouter } from "next/router";
 
 export default function Navbar() {
   const router = useRouter();
+  
   const getLinkClass = (path: string) => {
     const isActive = router.pathname === path || (path !== "/" && router.pathname.startsWith(path));
     
-    return isActive
-      ? "text-blue-600 font-semibold transition-colors" 
-      : "hover:text-blue-600 transition-colors";     
+    return `transition-colors ${
+      isActive 
+        ? "text-red-600 font-semibold" 
+        : "text-slate-600 hover:text-red-600"
+    }`; 
   };
 
   return (
     <header className="sticky top-0 z-50 w-full border-b border-gray-100 bg-white/80 backdrop-blur-md shadow-sm">
       <div className="container mx-auto flex h-20 items-center justify-between px-4 lg:px-8">
-        
         {/* Logo */}
-        <Link href="/" className="flex items-center gap-2 text-blue-600">
-          <Building2 size={32} strokeWidth={1.5} />
+        <Link href="/" className="flex items-center gap-2 text-red-600 group">
+          <HeartPulse
+            size={32}
+            strokeWidth={2}
+            className="group-hover:scale-110 transition-transform"
+          />
           <span className="text-xl font-bold tracking-tight text-slate-900">
-            Estate<span className="text-blue-600">Prime</span>
+            Vital<span className="text-red-600">Prime</span>
           </span>
         </Link>
 
         {/* Desktop Links */}
-        <nav className="hidden md:flex items-center gap-8 font-medium text-slate-500">
-          <Link href="/" className={getLinkClass("/")}>
+        <nav className="hidden md:flex items-center gap-8 font-medium">
+          <Link href="/" className={getLinkClass('/')}>
             Home
           </Link>
-          <Link href="/listings" className={getLinkClass("/listings")}>
-            Listings
+          <Link href="/listings" className={getLinkClass('/listings')}>
+            Suplemens
           </Link>
-          <Link href="/about" className={getLinkClass("/about")}>
+          <Link href="/benefits" className={getLinkClass('/benefits')}>
             About
           </Link>
-          <Link href="/contact" className={getLinkClass("/contact")}>
+          <Link href="/contact" className={getLinkClass('/contact')}>
             Contact
           </Link>
         </nav>
+
         <AuthMenu />
       </div>
     </header>

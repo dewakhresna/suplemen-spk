@@ -1,24 +1,31 @@
 import { Button } from "@heroui/react";
-import { Search } from "lucide-react";
+import { ShoppingBag, ShieldCheck } from "lucide-react";
 
 export default function HeroSection() {
   return (
-    <section className="relative overflow-hidden bg-gradient-to-b from-blue-50 via-white to-slate-50 py-24 sm:py-32">
+    <section className="relative overflow-hidden bg-gradient-to-b from-red-50 via-white to-slate-50 py-24 sm:py-32">
       <div className="container mx-auto px-4 text-center">
-        <h1 className="mx-auto max-w-4xl text-5xl font-extrabold tracking-tight text-slate-900 sm:text-7xl">
-          Find Your Dream Home <span className="text-blue-600">Today</span>
+        
+        <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-red-100 text-red-700 text-sm font-semibold mb-6 animate-fade-in">
+          <ShieldCheck size={16} /> Formulasi yang 100% didukung secara ilmiah
+        </div>
+
+        <h1 className="mx-auto max-w-3xl text-5xl font-extrabold tracking-tight text-slate-900 sm:text-7xl">
+          Tingkatkan kesehatan Anda dengan <span className="text-red-600">Suplemen Premium</span>
         </h1>
+        
         <p className="mx-auto mt-6 max-w-2xl text-lg leading-8 text-slate-600">
-          Browse thousands of premium real estate listings. Whether you are looking for a modern city penthouse or a quiet suburban retreat, we have the perfect home for you.
+          Wujudkan tujuan kesehatan Anda dengan suplemen yang telah teruji secara klinis. Berikan asupan terbaik bagi tubuh, dan jalani gaya hidup yang lebih sehat.
         </p>
-        <div className="mt-10 flex items-center justify-center gap-x-6">
+        
+        <div className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4">
           <Button 
             size="lg" 
             color="primary" 
-            endContent={<Search size={18} />}
-            className="bg-blue-600 px-8 py-6 text-lg font-semibold rounded-2xl shadow-xl shadow-blue-600/20 hover:scale-105 transition-all"
+            endContent={<ShoppingBag size={18} />}
+            className="bg-red-600 px-8 py-6 text-lg font-semibold rounded-2xl shadow-xl shadow-red-600/20 hover:scale-105 transition-all w-full sm:w-auto text-white"
           >
-            Browse Houses
+            Cari Suplemen
           </Button>
         </div>
       </div>

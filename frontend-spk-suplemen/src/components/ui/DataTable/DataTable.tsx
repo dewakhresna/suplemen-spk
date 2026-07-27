@@ -17,6 +17,7 @@ import {
 } from "@heroui/react";
 import { ChangeEvent, Key, ReactNode, useMemo } from "react";
 import { CiSearch } from "react-icons/ci";
+import { Plus, PackageX } from "lucide-react";
 
 interface PropTypes {
   buttonTopContentLabel?: string;
@@ -55,29 +56,29 @@ const DataTable = (props: PropTypes) => {
 
   const TopContent = useMemo(() => {
     return (
-      <div className="flex flex-col-reverse items-start justify-between gap-4 pb-4 lg:flex-row lg:items-center">
+      <div className="flex flex-col-reverse items-start justify-between gap-y-4 pb-2 lg:flex-row lg:items-center">
         {showSearch && (
           <Input
             isClearable
-            className="w-full sm:max-w-[320px]"
-            placeholder="Search properties..."
-            startContent={<CiSearch className="text-slate-400 text-lg mr-1" />}
+            className="w-full sm:max-w-xs"
+            placeholder="Cari nama produk..."
+            startContent={
+              <CiSearch className="text-slate-400 group-focus-within:text-red-500 text-lg transition-colors" />
+            }
             onClear={handleClearSearch}
             onChange={handleSearch}
-            variant="bordered"
-            radius="lg"
             classNames={{
-              inputWrapper:
-                "bg-white border-slate-200 shadow-sm hover:border-blue-400 focus-within:!border-blue-500 focus-within:!ring-2 focus-within:!ring-blue-100 transition-all duration-300",
-              input: "text-slate-700 placeholder:text-slate-400",
+              inputWrapper: "bg-white border border-slate-200 shadow-sm hover:border-red-300 focus-within:!border-red-500 focus-within:!ring-4 focus-within:!ring-red-100 transition-all duration-300 rounded-2xl h-12 px-4",
+              input: "text-sm text-slate-900 placeholder:text-slate-400",
             }}
           />
         )}
         {buttonTopContentLabel && (
-          <Button
-            color="primary"
+          <Button 
+            color="primary" 
             onPress={onClickButtonTopContent}
-            className="w-full lg:w-auto bg-blue-600 text-white font-medium rounded-xl shadow-md shadow-blue-500/20 hover:scale-[1.02] hover:bg-blue-700 transition-all duration-300 px-6 h-11"
+            className="w-full lg:w-auto bg-gradient-to-r from-red-600 to-red-700 text-white font-semibold rounded-2xl shadow-lg shadow-red-600/20 hover:shadow-xl hover:shadow-red-600/30 hover:-translate-y-0.5 transition-all duration-300 px-6 h-12"
+            startContent={<Plus size={18} strokeWidth={2.5} />}
           >
             {buttonTopContentLabel}
           </Button>
@@ -89,34 +90,32 @@ const DataTable = (props: PropTypes) => {
     handleSearch,
     handleClearSearch,
     onClickButtonTopContent,
+    showSearch,
   ]);
 
   const BottomContent = useMemo(() => {
     return (
-      <div className="flex flex-col-reverse items-center justify-between gap-6 pt-4 lg:flex-row">
+      <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-center lg:justify-between pt-4">
         {showLimit && (
           <Select
-            className="w-full sm:w-auto min-w-[200px]"
+            className="hidden sm:max-w-36 lg:block"
             size="md"
             selectedKeys={[`${currentLimit}`]}
             selectionMode="single"
             onChange={handleChangeLimit}
-            startContent={
-              <p className="text-sm font-medium text-slate-500 mr-1">
-                Tampilkan:
-              </p>
-            }
+            startContent={<span className="text-sm font-medium text-slate-600">Tampilkan:</span>}
             disallowEmptySelection
-            variant="bordered"
             classNames={{
-              trigger:
-                "bg-white border-slate-200 rounded-xl shadow-sm hover:border-blue-400 focus-within:!border-blue-500 transition-all duration-300 h-10",
-              value: "text-slate-700 font-medium",
+              trigger: "bg-white border border-slate-200 shadow-sm rounded-xl h-11 hover:border-red-300 transition-colors",
+              value: "text-slate-900 font-medium",
             }}
           >
             {LIMIT_LISTS.map((item) => (
-              <SelectItem key={item.value} textValue={item.label}>
-                <span className="text-slate-700">{item.label}</span>
+              <SelectItem 
+                key={item.value}
+                className="text-slate-700 data-[selected=true]:bg-red-50 data-[selected=true]:text-red-700"
+              >
+                {item.label}
               </SelectItem>
             ))}
           </Select>
@@ -125,18 +124,17 @@ const DataTable = (props: PropTypes) => {
           <Pagination
             isCompact
             showControls
-            color="primary"
+            color="danger"
             page={Number(currentPage)}
             total={totalPages}
             onChange={handleChangePage}
             loop
             classNames={{
               wrapper: "gap-2",
-              item: "w-9 h-9 text-slate-600 font-medium bg-transparent hover:bg-slate-100 rounded-lg transition-colors duration-200",
-              cursor:
-                "bg-blue-600 text-white font-semibold shadow-md shadow-blue-500/30 rounded-lg",
-              prev: "bg-transparent hover:bg-slate-100 rounded-lg text-slate-500",
-              next: "bg-transparent hover:bg-slate-100 rounded-lg text-slate-500",
+              item: "w-9 h-9 text-sm rounded-xl bg-white border border-slate-200 shadow-sm hover:bg-red-50 hover:border-red-200 text-slate-700 transition-all",
+              cursor: "bg-gradient-to-r from-red-600 to-red-700 text-white font-bold shadow-md shadow-red-600/20 rounded-xl",
+              prev: "bg-white border border-slate-200 rounded-xl shadow-sm hover:bg-slate-50 text-slate-600",
+              next: "bg-white border border-slate-200 rounded-xl shadow-sm hover:bg-slate-50 text-slate-600",
             }}
           />
         )}
@@ -148,6 +146,7 @@ const DataTable = (props: PropTypes) => {
     totalPages,
     handleChangeLimit,
     handleChangePage,
+    showLimit,
   ]);
 
   return (
@@ -156,16 +155,14 @@ const DataTable = (props: PropTypes) => {
       bottomContentPlacement="outside"
       topContent={TopContent}
       topContentPlacement="outside"
+      removeWrapper
       classNames={{
         base: "max-w-full",
-        wrapper: cn(
-          "bg-white rounded-2xl shadow-sm border border-slate-200 p-4 sm:p-6 transition-all",
-          { "overflow-x-hidden": isLoading },
-        ),
-        th: "bg-blue-50/70 text-blue-700 text-xs uppercase font-bold tracking-wider py-4 border-b border-slate-200 first:rounded-l-xl last:rounded-r-xl",
-        tr: "group hover:bg-blue-50/40 transition-colors duration-300 border-b border-slate-100 last:border-none",
-        td: "py-4 text-sm text-slate-600 font-medium group-hover:text-slate-900 transition-colors duration-300 align-middle",
-        emptyWrapper: "py-16 text-slate-400 text-center font-medium",
+        table: "bg-white border border-slate-200 shadow-xl shadow-red-900/5 rounded-3xl overflow-hidden min-w-full",
+        thead: "bg-gradient-to-r from-red-50/80 to-red-100/50",
+        th: "py-5 px-6 text-xs font-bold uppercase tracking-wider text-red-900 bg-transparent border-b border-red-100",
+        td: "py-5 px-6 text-sm font-medium text-slate-700 border-b border-slate-100/50",
+        tr: "group hover:bg-red-50/40 transition-colors duration-300",
       }}
     >
       <TableHeader columns={columns}>
@@ -178,16 +175,20 @@ const DataTable = (props: PropTypes) => {
 
       <TableBody
         emptyContent={
-          <div className="flex flex-col items-center justify-center gap-2">
-            <CiSearch className="text-4xl text-slate-300" />
-            <p>{emptyContent || "No properties found."}</p>
+          <div className="flex flex-col items-center justify-center py-16 px-4">
+            <div className="p-4 bg-slate-50 text-slate-300 rounded-full mb-4">
+              <PackageX size={48} strokeWidth={1.5} />
+            </div>
+            <p className="text-lg font-bold text-slate-700">{emptyContent}</p>
+
           </div>
         }
         isLoading={isLoading}
         items={data}
         loadingContent={
-          <div className="flex h-full w-full items-center justify-center bg-white/60 backdrop-blur-md rounded-xl z-10 absolute inset-0">
-            <Spinner color="primary" size="lg" />
+          <div className="flex flex-col h-full w-full items-center justify-center bg-white/80 backdrop-blur-sm z-10 py-20">
+            <Spinner color="danger" size="lg" />
+            <span className="mt-4 text-sm font-semibold text-red-600 animate-pulse">Mengambil data...</span>
           </div>
         }
       >

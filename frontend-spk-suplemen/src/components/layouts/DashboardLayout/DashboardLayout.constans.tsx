@@ -3,7 +3,7 @@ import { CiFolderOn, CiUser, CiHome, CiWallet } from "react-icons/ci";
 const SIDEBAR_ADMIN = [
   {
     key: "house",
-    label: "Data Rumah",
+    label: "Data Suplemen",
     href: "/admin/house",
     icon: <CiHome />,
   },
