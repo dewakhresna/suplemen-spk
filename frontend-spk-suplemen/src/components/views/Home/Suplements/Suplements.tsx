@@ -131,7 +131,7 @@ function SuplemenCard({
         <Button
           className="flex-1 bg-gradient-to-r from-red-600 to-red-800 text-white font-semibold rounded-xl shadow-md shadow-red-600/20 hover:shadow-lg hover:shadow-red-600/40 hover:-translate-y-0.5 transition-all duration-300 h-12"
           endContent={<ArrowRight size={18} />}
-          onPress={() => router.push(`/suplemens/${suplemen.id}`)}
+          onPress={() => router.push(`/suplements/${suplemen.id}`)}
         >
           Lihat Detail
         </Button>

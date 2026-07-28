@@ -1,9 +1,9 @@
 import { useRouter } from "next/router";
 import Navbar from "@/components/views/Home/Navbar"; 
 import Footer from "@/components/views/Home/Footer"; 
-import HouseDetailContainer from "@/components/views/DetailHouse/HouseDetailContainer";
+import SuplemenDetailContainer from "@/components/views/DetailSuplemen/SuplemenDetailContainer";
 
-export default function HouseDetailPage() {
+export default function SuplemenDetailPage() {
   const router = useRouter();
   const { id } = router.query;
 
@@ -12,9 +12,8 @@ export default function HouseDetailPage() {
       <Navbar />
 
       <main className="flex-grow pt-8 pb-20">
-        {/* Pastikan router sudah siap membaca ID sebelum merender Container */}
         {router.isReady ? (
-          <HouseDetailContainer id={id} />
+          <SuplemenDetailContainer id={id} />
         ) : (
           <div className="flex items-center justify-center py-20">
             <p className="text-slate-500">Menyiapkan halaman...</p>
