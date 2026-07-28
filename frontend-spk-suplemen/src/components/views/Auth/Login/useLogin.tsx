@@ -47,7 +47,7 @@ export const useLogin = () => {
 
       const decoded: any = jwtDecode(token);
       if (decoded.role === "admin") {
-        router.push("/admin/house");
+        router.push("/admin/suplemen/");
       } else {
         router.push("/");
       }

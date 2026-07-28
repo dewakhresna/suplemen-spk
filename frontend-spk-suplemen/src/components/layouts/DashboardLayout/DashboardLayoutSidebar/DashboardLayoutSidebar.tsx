@@ -34,13 +34,13 @@ const DashboardLayoutSidebar = (props: PropTypes) => {
       <div className="flex flex-col w-full">
         
         <div className="flex flex-col items-center sm:items-start w-full pb-8 mb-6 border-b border-slate-100/80">
-          <Link href="/admin/house?limit=8&page=1&search=" className="flex flex-col group">
+          <Link href="/admin/suplemen?limit=8&page=1&search=" className="flex flex-col group">
             <div className="flex items-center gap-2">
               <div className="p-1.5 bg-red-50 text-red-600 rounded-xl group-hover:scale-105 group-hover:bg-red-100 transition-all duration-300">
                 <HeartPulse size={28} strokeWidth={2.5} />
               </div>
               <span className="text-2xl font-black tracking-tight text-slate-900">
-                Vital<span className="text-red-600">Prime</span>
+                Vital<span className="text-red-600"> Prime</span>
               </span>
             </div>
             <p className="text-xs font-semibold text-slate-400 tracking-wider uppercase mt-2 ml-1">

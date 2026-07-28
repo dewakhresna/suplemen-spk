@@ -66,7 +66,7 @@ export default function Footer() {
         {/* Bottom Section: Copyright & Social Media */}
         <div className="pt-8 border-t border-slate-100 flex flex-col md:flex-row items-center justify-between gap-4">
           <p className="text-sm text-slate-500">
-            © {new Date().getFullYear()} VitalPrime Supplements. All rights reserved.
+            © {new Date().getFullYear()} Vital Prime Supplements. All rights reserved.
           </p>
           <div className="flex items-center gap-4 text-slate-400">
             <Link href="#" className="hover:text-red-600 transition-colors"><Facebook size={20} /></Link>

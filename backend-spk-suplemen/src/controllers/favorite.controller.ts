@@ -42,19 +42,19 @@ export default {
 
   async create(req: Request, res: Response) {
     try {
-      const { user_id, house_id } = req.body;
+      const { user_id, suplemen_id } = req.body;
 
-      if (!user_id || !house_id) {
+      if (!user_id || !suplemen_id) {
         return res.status(400).json({
-          meta: { status: 400, message: "user_id and house_id are required" },
+          meta: { status: 400, message: "user_id and suplemen_id are required" },
           data: null
         });
       }
 
-      const newFavorite = await FavoriteService.create({ user_id, house_id });
+      const newFavorite = await FavoriteService.create({ user_id, suplemen_id });
       
       return res.status(201).json({
-        meta: { status: 201, message: "Success add house to favorites" },
+        meta: { status: 201, message: "Success add suplemen to favorites" },
         data: newFavorite
       });
     } catch (error: any) {
@@ -78,7 +78,7 @@ export default {
       }
 
       return res.status(200).json({
-        meta: { status: 200, message: "Success remove house from favorites" },
+        meta: { status: 200, message: "Success remove suplemen from favorites" },
         data: null
       });
     } catch (error: any) {

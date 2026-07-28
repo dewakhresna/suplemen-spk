@@ -1,17 +1,11 @@
-import { CiFolderOn, CiUser, CiHome, CiWallet } from "react-icons/ci";
+import { CiFolderOn, CiUser, CiMedicalClipboard } from "react-icons/ci";
 
 const SIDEBAR_ADMIN = [
   {
     key: "house",
-    label: "Data Rumah",
-    href: "/admin/house",
-    icon: <CiHome />,
-  },
-  {
-    key: "house",
     label: "Data Suplemen",
     href: "/admin/suplemen",
-    icon: <CiHome />,
+    icon: <CiMedicalClipboard />,
   },
   {
     key: "user",
@@ -25,33 +19,6 @@ const SIDEBAR_ADMIN = [
     href: "/admin/profile",
     icon: <CiUser />,
   },
-  // {
-  //   key: "banner",
-  //   label: "Banner",
-  //   href: "/admin/banner",
-  //   icon: <CiBookmark />,
-  // },
-  // {
-  //   key: "transaction",
-  //   label: "Transaction",
-  //   href: "/admin/transaction",
-  //   icon: <CiWallet />,
-  // },
 ];
 
-const SIDEBAR_MEMBER = [
-  {
-    key: "transaction",
-    label: "Transaction",
-    href: "/member/transaction",
-    icon: <CiWallet />,
-  },
-  {
-    key: "profile",
-    label: "Profile",
-    href: "/member/profile",
-    icon: <CiFolderOn />,
-  },
-];
-
-export { SIDEBAR_ADMIN, SIDEBAR_MEMBER };
+export { SIDEBAR_ADMIN };

@@ -28,7 +28,7 @@ export function middleware(request: NextRequest) {
 
     if (isLoginPage) {
       if (decoded.role === 'admin') {
-        return NextResponse.redirect(new URL('/admin/house', request.url));
+        return NextResponse.redirect(new URL('/admin/suplemen', request.url));
       }
       return NextResponse.redirect(new URL('/profile', request.url));
     }

@@ -1,7 +1,7 @@
 import Head from "next/head";
 import Navbar from "@/components/views/Home/Navbar";
 import HeroSection from "@/components/views/Home/HeroSection";
-import ListingGrid from "@/components/views/Home/House/ListingGrid";
+import Suplements from "@/components/views/Home/Suplements/Suplements";
 import LiveChat from "@/components/views/Chat/LiveChat";
 import Footer from "@/components/views/Home/Footer";
 
@@ -36,7 +36,7 @@ export default function Home() {
                     </p>
                   </div>
                 </div>
-                <ListingGrid />
+                <Suplements />
               </div>
 
               <aside className="w-full lg:w-[30%] order-1 lg:order-2">
@@ -45,7 +45,7 @@ export default function Home() {
             </div>
           </section>
         </main>
-        <Footer /> {/* <-- Pasang Footer di sini */}
+        <Footer /> 
       </div>
     </>
   );

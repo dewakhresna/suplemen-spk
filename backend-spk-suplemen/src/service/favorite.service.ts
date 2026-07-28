@@ -1,6 +1,6 @@
 import Favorite from "../models/favorite.model.js";
-import House from "../models/house.model.js";
-import HouseDetail from "../models/house_detail.model.js";
+import Suplemen from "../models/suplemen.model.js";
+import SuplemenDetail from "../models/suplemen_detail.model.js";
 
 export default {
   async findAllByUser(userId: number, page: number = 1, limit: number = 10) {
@@ -13,10 +13,10 @@ export default {
       order: [["id", "DESC"]],
       include: [
         {
-          model: House,
+          model: Suplemen,
           include: [
             {
-              model: HouseDetail,
+              model: SuplemenDetail,
             },
           ],
         },
@@ -26,16 +26,16 @@ export default {
     return { count, rows };
   },
 
-  async findByUserAndHouse(userId: number, houseId: number) {
+  async findByUserAndSuplemen(userId: number, suplemenId: number) {
     return await Favorite.findOne({
       where: {
         user_id: userId,
-        house_id: houseId,
+        suplemen_id: suplemenId,
       },
     });
   },
 
-  async create(data: { user_id: number; house_id: number }) {
+  async create(data: { user_id: number; suplemen_id: number }) {
     return await Favorite.create(data as any);
   },
 

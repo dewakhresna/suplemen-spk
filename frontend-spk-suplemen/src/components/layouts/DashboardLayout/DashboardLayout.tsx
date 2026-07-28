@@ -1,7 +1,7 @@
 import PageHead from "@/components/commons/PageHead";
 import { ReactNode, useState } from "react";
 import DashboardLayoutSidebar from "./DashboardLayoutSidebar";
-import { SIDEBAR_ADMIN, SIDEBAR_MEMBER } from "./DashboardLayout.constans";
+import { SIDEBAR_ADMIN } from "./DashboardLayout.constans";
 import { Navbar, NavbarMenuToggle } from "@heroui/react";
 
 interface PropTypes {
@@ -30,7 +30,7 @@ const DashboardLayout = (props: PropTypes) => {
         )}
 
         <DashboardLayoutSidebar
-          sidebarItems={type === "admin" ? SIDEBAR_ADMIN : SIDEBAR_MEMBER}
+          sidebarItems={SIDEBAR_ADMIN}
           isOpen={open}
         />
         

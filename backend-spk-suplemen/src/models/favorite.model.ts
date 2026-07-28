@@ -1,12 +1,12 @@
 import { DataTypes, Model } from 'sequelize';
 import sequelize from '../db.js';
-import House from './house.model.js';
+import Suplemen from './suplemen.model.js'
 import User from './user.model.js';
 
 export interface FavoriteAttributes {
   id?: number;
   user_id: number;
-  house_id: number;
+  suplemen_id: number;
   createdAt?: Date;
   updatedAt?: Date;
 }
@@ -14,7 +14,7 @@ export interface FavoriteAttributes {
 class Favorite extends Model<FavoriteAttributes> implements FavoriteAttributes {
   declare id: number;
   declare user_id: number;
-  declare house_id: number;
+  declare suplemen_id: number;
   declare readonly createdAt: Date;
   declare readonly updatedAt: Date;
 }
@@ -33,11 +33,11 @@ Favorite.init({
       key: 'id'
     }
   },
-  house_id: {
+  suplemen_id: { // Ubah house_id menjadi suplemen_id
     type: DataTypes.INTEGER,
     allowNull: false,
     references: {
-      model: 'houses',
+      model: 'suplemens', // Sesuaikan dengan nama tabel suplemen di database kamu
       key: 'id'
     }
   },
@@ -47,8 +47,9 @@ Favorite.init({
   timestamps: true,
 });
 
-Favorite.belongsTo(House, { foreignKey: 'house_id' });
-House.hasMany(Favorite, { foreignKey: 'house_id' });
+// Sesuaikan relasi antar model
+Favorite.belongsTo(Suplemen, { foreignKey: 'suplemen_id' });
+Suplemen.hasMany(Favorite, { foreignKey: 'suplemen_id' });
 
 Favorite.belongsTo(User, { foreignKey: 'user_id' });
 User.hasMany(Favorite, { foreignKey: 'user_id' });
