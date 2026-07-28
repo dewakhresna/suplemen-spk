@@ -9,14 +9,8 @@ import {
   CardFooter,
   Image,
   Skeleton,
-  Popover,
-  PopoverTrigger,
-  PopoverContent,
-  Select,
-  SelectItem,
 } from "@heroui/react";
 import {
-  Filter,
   AlertCircle,
   Heart,
   Star,
@@ -37,7 +31,6 @@ const formatRupiah = (angka: number) => {
 
 const getImageUrl = (imagePath?: string | null) => {
   if (!imagePath || imagePath === "") {
-    // Placeholder default untuk produk suplemen
     return "https://images.unsplash.com/photo-1593095948071-474c5cc2989d?auto=format&fit=crop&w=800&q=80";
   }
 
@@ -178,58 +171,15 @@ export default function SuplemenGrid() {
     loadMore,
   } = useSuplemens();
 
-  const categories = [
-    "Whey Protein",
-    "Creatine",
-    "BCAA",
-    "Pre-Workout",
-    "Mass Gainer",
-    "Fat Burner",
-    "Vitamin & Mineral"
-  ];
-
   return (
     <div className="w-full flex flex-col gap-8 pb-16">
-      <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-6">
-        <div>
-          <h2 className="text-3xl font-bold text-slate-900 tracking-tight">
-            Katalog Suplemen
-          </h2>
-          <p className="text-slate-500 mt-2 text-base">
-            Temukan produk suplemen terbaik untuk mendukung target kebugaran Anda.
-          </p>
-        </div>
-
-        <Popover placement="bottom-end" showArrow offset={8}>
-          <PopoverTrigger>
-            <Button
-              variant="bordered"
-              className="h-12 px-6 rounded-xl border-slate-200 text-slate-700 bg-white shadow-sm hover:border-red-400 hover:bg-red-50 hover:text-red-700 transition-all duration-300 font-medium"
-            >
-              <Filter size={18} className="mr-2 text-slate-500 group-hover:text-red-600" />
-              Filter Produk
-            </Button>
-          </PopoverTrigger>
-          <PopoverContent className="w-80 p-5 rounded-2xl shadow-xl border border-slate-100 bg-white">
-            <div className="w-full flex flex-col gap-2">
-              <label className="text-sm font-semibold text-slate-700 mb-1">
-                Filter by Kategori
-              </label>
-              <Select
-                placeholder="Pilih Kategori"
-                variant="bordered"
-                classNames={{
-                  trigger: "h-12 rounded-xl border-slate-200 hover:border-red-400 focus-within:!border-red-500 focus-within:!ring-2 focus-within:!ring-red-100 transition-all duration-300",
-                  value: "text-slate-700 font-medium",
-                }}
-              >
-                {categories.map((category) => (
-                  <SelectItem key={category}>{category}</SelectItem>
-                ))}
-              </Select>
-            </div>
-          </PopoverContent>
-        </Popover>
+      <div className="flex flex-col gap-2">
+        <h2 className="text-3xl font-bold text-slate-900 tracking-tight">
+          Katalog Suplemen
+        </h2>
+        <p className="text-slate-500 text-base">
+          Temukan produk suplemen terbaik untuk mendukung target kebugaran Anda.
+        </p>
       </div>
 
       <div className="w-full min-h-[400px]">

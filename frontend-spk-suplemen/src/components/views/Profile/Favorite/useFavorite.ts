@@ -1,28 +1,28 @@
 import { useState, useEffect, useCallback } from "react";
 import instance from "@/libs/axios/instance";
 
-export interface FavoriteHouseData {
+export interface FavoriteSuplemenData {
   id: number;
   user_id: number;
-  house_id: number;
-  House: {
+  suplemen_id: number;
+  Suplemen: {
     id: number;
     nama: string;
     c1_harga: number;
-    c2_jarak: number;
-    c3_keamanan: number;
-    c4_luas: number;
-    HouseDetail?: {
+    c2_ulasan_negatif: number;
+    c3_kandungan_nutrisi: number;
+    c4_efektivitas_manfaat: number;
+    SuplemenDetail?: {
       description: string | null;
       image_1: string | null;
-      beds: number | null;
-      baths: number | null;
+      rating: number | null;
+      rater: number | null;
     };
   };
 }
 
-export const useFavorite = () => {
-  const [favorites, setFavorites] = useState<FavoriteHouseData[]>([]);
+export const useFavoriteSuplemen = () => {
+  const [favorites, setFavorites] = useState<FavoriteSuplemenData[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
 
@@ -39,11 +39,12 @@ export const useFavorite = () => {
         return;
       }
 
+      // Pastikan backend favorit sudah di-set untuk memanggil data beserta Suplemen
       const favRes = await instance.get(`/favorites?userId=${userId}`);
       setFavorites(favRes.data.data);
     } catch (err: any) {
       console.error("Error fetching favorites:", err);
-      setError("Gagal memuat daftar favorit. Silakan coba lagi nanti.");
+      setError("Gagal memuat daftar produk favorit. Silakan coba lagi nanti.");
     } finally {
       setIsLoading(false);
     }
@@ -59,7 +60,7 @@ export const useFavorite = () => {
       setFavorites((prev) => prev.filter((fav) => fav.id !== favoriteId));
     } catch (error) {
       console.error("Gagal menghapus favorit:", error);
-      alert("Terjadi kesalahan saat menghapus favorit.");
+      alert("Terjadi kesalahan jaringan saat menghapus favorit.");
     }
   };
 
