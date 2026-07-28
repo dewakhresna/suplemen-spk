@@ -8,6 +8,8 @@ import uploadMiddleware from "../middlewares/upload.middleware.js";
 import uploadController from "../controllers/upload.controller.js";
 import userController from "../controllers/user.controller.js";
 import favoriteController from "../controllers/favorite.controller.js";
+import suplemenController from "../controllers/suplemen.controller.js";
+import suplemenDetailController from "../controllers/suplemen_detail.controller.js";
 
 const router = express.Router();
 
@@ -36,6 +38,31 @@ router.get(
 );
 router.put("/house-details/house/:house_id", houseDetailController.update);
 router.delete("/house-details/house/:house_id", houseDetailController.delete);
+
+
+// --- RUTE SUPLEMEN ---
+router.post("/suplemen/create", suplemenController.create);
+router.get("/suplemen", suplemenController.getAll);
+router.get("/suplemen/:id", suplemenController.getById);
+router.put("/suplemen/:id", suplemenController.update);
+router.delete("/suplemen/:id", suplemenController.delete);
+
+// --- RUTE SUPLEMEN DETAILS ---
+router.post(
+  "/suplemen-details/create",
+  uploadMiddleware.fields([
+    { name: "image_1", maxCount: 1 },
+    { name: "image_2", maxCount: 1 },
+    { name: "image_3", maxCount: 1 },
+  ]),
+  suplemenDetailController.create,
+);
+router.get(
+  "/suplemen-details/suplemen/:suplemen_id",
+  suplemenDetailController.getBySuplemenId,
+);
+router.put("/suplemen-details/suplemen/:suplemen_id", suplemenDetailController.update);
+router.delete("/suplemen-details/suplemen/:suplemen_id", suplemenDetailController.delete);
 
 // RUTE ADMIN EDIT USER
 router.get("/users", userController.getAll);
