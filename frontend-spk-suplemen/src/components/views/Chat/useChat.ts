@@ -1,14 +1,14 @@
 import { useState, useRef, useEffect } from "react";
 import api from "@/utils/api";
 import instance from "@/libs/axios/instance";
-import { Message } from "./types.js";
+import { Message } from "./types"; // Pastikan path import sesuai
 
 export function useChat() {
   const [messages, setMessages] = useState<Message[]>([
     {
       id: 1,
       role: "admin",
-      text: "Halo! 👋 Selamat datang di Rumah Impianmu. Ada kriteria rumah yang sedang Anda cari hari ini?",
+      text: "Halo! 👋 Saya konsultan nutrisi AI Anda. Apakah ada keluhan kesehatan atau tujuan kebugaran yang ingin Anda capai hari ini?",
     },
   ]);
   const [input, setInput] = useState("");
@@ -22,7 +22,7 @@ export function useChat() {
 
   useEffect(() => {
     setIsMounted(true);
-    const savedChat = localStorage.getItem("chat_history");
+    const savedChat = localStorage.getItem("chat_history_suplemen");
     if (savedChat) {
       setMessages(JSON.parse(savedChat));
     }
@@ -30,7 +30,7 @@ export function useChat() {
 
   useEffect(() => {
     if (isMounted) {
-      localStorage.setItem("chat_history", JSON.stringify(messages));
+      localStorage.setItem("chat_history_suplemen", JSON.stringify(messages));
     }
   }, [messages, isMounted]);
 
@@ -63,20 +63,20 @@ export function useChat() {
 
         setMessages((prevMessages) =>
           prevMessages.map((msg) => {
-            if (!msg.houses) return msg;
+            if (!msg.supplements) return msg;
 
-            const updatedHouses = msg.houses.map((h: any) => {
+            const updatedSupplements = msg.supplements.map((s: any) => {
               const favRecord = latestFavorites.find(
-                (f: any) => f.house_id === h.id,
+                (f: any) => f.supplement_id === s.id 
               );
               return {
-                ...h,
+                ...s,
                 isFavorite: !!favRecord,
                 favoriteId: favRecord ? favRecord.id : null,
               };
             });
 
-            return { ...msg, houses: updatedHouses };
+            return { ...msg, supplements: updatedSupplements };
           }),
         );
       } catch (error) {
@@ -109,10 +109,12 @@ export function useChat() {
 
       const daftarRekomendasi = response.data.data.rekomendasi
         .slice(0, 3)
-        .map((house: any) => {
-          const isFav = userFavorites.find((f: any) => f.house_id === house.id);
+        .map((supplement: any) => {
+          const isFav = userFavorites.find(
+            (f: any) => f.supplement_id === supplement.id
+          );
           return {
-            ...house,
+            ...supplement,
             isFavorite: !!isFav,
             favoriteId: isFav ? isFav.id : null,
           };
@@ -123,9 +125,9 @@ export function useChat() {
         {
           id: Date.now() + 1,
           role: "admin",
-          text: "Berikut adalah rekomendasi rumah terbaik berdasarkan kriteria Anda:",
-          houses: daftarRekomendasi,
-          outroText: "Apakah ada kriteria lain yang ingin Anda ubah?",
+          text: "Berikut adalah rekomendasi suplemen terbaik berdasarkan kebutuhan Anda:",
+          supplements: daftarRekomendasi, // Ubah dari houses ke supplements
+          outroText: "Apakah ada kriteria lain yang ingin Anda tambahkan? (Misal: bentuk kapsul atau bubuk)",
         },
       ]);
     } catch (error) {
@@ -135,7 +137,7 @@ export function useChat() {
         {
           id: Date.now() + 1,
           role: "admin",
-          text: "Maaf, sistem AI atau koneksi sedang bermasalah.",
+          text: "Maaf, sistem AI atau koneksi sedang bermasalah. Silakan coba lagi.",
         },
       ]);
     } finally {

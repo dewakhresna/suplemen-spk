@@ -7,6 +7,8 @@ export const useLogout = () => {
   const handleLogout = () => {
     Cookies.remove("token", { path: "/" });
 
+    localStorage.removeItem("chat_history_suplemen");
+    
     localStorage.removeItem("chat_history");
 
     window.location.href = "/";
