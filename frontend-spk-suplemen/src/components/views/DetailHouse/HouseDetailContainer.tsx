@@ -1,16 +1,13 @@
 import Head from "next/head";
 import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
-
 import HouseCarousel from "./HouseCarousel";
 import HouseInfo from "./HouseInfo";
 import ContactCard from "./ContactCard";
 import { useDetailHouse } from "./useDetailHouse"; 
 
 export default function HouseDetailContainer({ id }: { id: string | string[] | undefined }) {
-
   const { house, isLoading, error, currentUserId } = useDetailHouse(id as string);
-
 
   if (isLoading) {
     return (
@@ -58,7 +55,6 @@ export default function HouseDetailContainer({ id }: { id: string | string[] | u
         </div>
 
         <div className="flex flex-col lg:flex-row gap-10 lg:gap-12 relative">
-          
           <div className="w-full lg:w-[65%]">
             <HouseInfo house={house} />
           </div>

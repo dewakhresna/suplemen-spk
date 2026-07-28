@@ -26,16 +26,6 @@ export default function Home() {
           <section className="container mx-auto px-4 py-16">
             <div className="flex flex-col lg:flex-row gap-8">
               <div className="w-full lg:w-[70%] order-2 lg:order-1">
-                <div className="mb-8 flex items-center justify-between">
-                  <div>
-                    <h2 className="text-3xl font-bold tracking-tight text-slate-900">
-                      Featured Listings
-                    </h2>
-                    <p className="text-slate-500 mt-2">
-                      Explore our hand-picked properties for you.
-                    </p>
-                  </div>
-                </div>
                 <Suplements />
               </div>
 

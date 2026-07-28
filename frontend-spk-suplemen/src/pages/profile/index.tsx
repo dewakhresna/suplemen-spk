@@ -11,13 +11,12 @@ import LogoutSection from "@/components/views/Profile/LogoutSection";
 export default function ProfilePage() {
   const [activeTab, setActiveTab] = useState("data-diri");
 
-  // Dynamic content renderer based on active tab
   const renderContent = () => {
     switch (activeTab) {
       case "data-diri":
         return <ProfileInfo />;
       case "favorit":
-        return <FavoriteList/>;
+        return <FavoriteList />;
       case "logout":
         return <LogoutSection />;
       default:
@@ -28,33 +27,25 @@ export default function ProfilePage() {
   return (
     <main className="min-h-screen bg-slate-50 text-slate-900 font-sans py-12 lg:py-16">
       <div className="container mx-auto px-4 lg:px-8">
-        
-        {/* Page Header dengan Tombol Kembali */}
         <div className="mb-8 lg:mb-12 flex flex-col items-start">
-          <Link 
-            href="/" 
-            className="inline-flex items-center gap-2 text-sm text-slate-500 hover:text-blue-600 transition-colors font-medium mb-4"
+          <Link
+            href="/"
+            className="inline-flex items-center gap-2 rounded-xl px-4 py-2.5 text-sm font-semibold text-slate-500 transition-all duration-300 hover:bg-white hover:text-red-600 hover:shadow-md hover:shadow-red-900/5 group"
           >
-            <ArrowLeft size={16} />
+            <ArrowLeft
+              size={16}
+              strokeWidth={2.2}
+              className="group-hover:-translate-x-1 transition-transform"
+            />
             Kembali ke Beranda
           </Link>
-        
         </div>
 
-        {/* 2-Column Layout */}
         <div className="flex flex-col lg:flex-row gap-4">
-          
           {/* Left: Fixed Width Sidebar */}
-          <SidebarProfile  
-            activeTab={activeTab} 
-            setActiveTab={setActiveTab} 
-          />
+          <SidebarProfile activeTab={activeTab} setActiveTab={setActiveTab} />
 
-          {/* Right: Flexible Dynamic Content Area */}
-          <div className="flex-1 w-full min-h-[500px]">
-            {renderContent()}
-          </div>
-
+          <div className="flex-1 w-full min-h-[500px]">{renderContent()}</div>
         </div>
       </div>
     </main>

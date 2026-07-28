@@ -37,7 +37,6 @@ export default function SidebarProfile({ activeTab, setActiveTab }: SidebarProps
             </>
           ) : (
             <>
-              {/* Premium Avatar Ring */}
               <div className="relative">
                 <div className="absolute inset-0 bg-gradient-to-tr from-red-700 to-red-500 rounded-full blur-md opacity-20 scale-105"></div>
                 <div className="p-1.5 bg-gradient-to-tr from-red-700 via-red-600 to-red-500 rounded-full shadow-lg shadow-red-700/20 relative z-10">
