@@ -2,6 +2,13 @@ import { Op } from "sequelize";
 import Suplemen, { SuplemenAttributes } from "../models/suplemen.model.js";
 import SuplemenDetail from "../models/suplemen_detail.model.js";
 
+export interface ChatFilters {
+  hargaMin?: number;
+  hargaMax?: number;
+  kandungan_nutrisiMin?: number;
+  kandungan_nutrisiMax?: number;
+}
+
 export default {
   async findAll(page: number = 1, limit: number = 10, search: string = "") {
     const offset = (page - 1) * limit;
@@ -22,8 +29,25 @@ export default {
     return { count, rows };
   },
 
-  async getAllForChat() {
+  async getFilteredForChat(filters: ChatFilters) {
+    const { hargaMin, hargaMax, kandungan_nutrisiMin, kandungan_nutrisiMax } = filters;
+
+    const whereSuplemen: any = {};
+
+    if (hargaMin !== undefined || hargaMax !== undefined) {
+      whereSuplemen.c1_harga = {};
+      if (hargaMin !== undefined) whereSuplemen.c1_harga[Op.gte] = hargaMin;
+      if (hargaMax !== undefined) whereSuplemen.c1_harga[Op.lte] = hargaMax; 
+    }
+
+    if (kandungan_nutrisiMin !== undefined || kandungan_nutrisiMax !== undefined) {
+      whereSuplemen.c3_kandungan_nutrisi = {};
+      if (kandungan_nutrisiMin !== undefined) whereSuplemen.c3_kandungan_nutrisi[Op.gte] = kandungan_nutrisiMin;
+      if (kandungan_nutrisiMax !== undefined) whereSuplemen.c3_kandungan_nutrisi[Op.lte] = kandungan_nutrisiMax;
+    }
+
     return await Suplemen.findAll({
+      where: whereSuplemen,
       order: [["id", "DESC"]],
       include: [
         {

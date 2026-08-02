@@ -1,18 +1,96 @@
-import { Card, CardHeader, CardBody, CardFooter, Input, Button, Avatar } from "@heroui/react";
-import { Send, Activity } from "lucide-react";
+import { useState } from "react";
+import {
+  Card,
+  CardHeader,
+  CardBody,
+  CardFooter,
+  Input,
+  Textarea,
+  Button,
+  Avatar,
+  Select,
+  SelectItem,
+} from "@heroui/react";
+import { Send, Activity, SlidersHorizontal } from "lucide-react";
 import { useChat } from "./useChat";
 import ChatBubble from "./ChatBubble";
 
 export default function LiveChat() {
-  const { 
-    messages, 
-    input, 
-    setInput, 
-    isLoading, 
-    messagesEndRef, 
-    handleSendMessage, 
-    currentUserId 
+  const {
+    messages,
+    input,
+    setInput,
+    isLoading,
+    messagesEndRef,
+    handleSendMessage,
+    currentUserId,
+    filters,
+    setFilters,
   } = useChat();
+
+  const [rentangHarga, setRentangHarga] = useState<Set<string>>(new Set([]));
+  const [rentangKandungan, setRentangKandungan] = useState<Set<string>>(new Set([]));
+
+  // Handler untuk Harga Suplemen
+  const handleHargaChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const val = e.target.value;
+    setRentangHarga(new Set([val]));
+
+    let min = "";
+    let max = "";
+
+    switch (val) {
+      case "<100k":
+        max = "100000"; // Di bawah 100rb
+        break;
+      case "100k-300k":
+        min = "100000";
+        max = "300000"; // 100rb s/d 300rb
+        break;
+      case "300k-500k":
+        min = "300000";
+        max = "500000"; // 300rb s/d 500rb
+        break;
+      case ">500k":
+        min = "500000"; // Di atas 500rb
+        break;
+      default:
+        min = "";
+        max = "";
+    }
+
+    setFilters({ ...filters, hargaMin: min, hargaMax: max });
+  };
+
+  // Handler untuk Kandungan Nutrisi
+  const handleKandunganChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const val = e.target.value;
+    setRentangKandungan(new Set([val]));
+
+    let min = "";
+    let max = "";
+
+    switch (val) {
+      case "<10":
+        max = "10"; 
+        break;
+      case "10-30":
+        min = "10";
+        max = "30";
+        break;
+      case "30-50":
+        min = "30";
+        max = "50";
+        break;
+      case ">50":
+        min = "50";
+        break;
+      default:
+        min = "";
+        max = "";
+    }
+    setFilters({ ...filters, kandungan_nutrisiMin: min, kandungan_nutrisiMax: max });
+  };
 
   return (
     <div className="sticky top-28 h-[calc(100vh-8rem)] min-h-[500px] max-h-[700px]">
@@ -33,7 +111,7 @@ export default function LiveChat() {
               Asisten Suplemen AI
             </h4>
             <span className="text-xs text-red-100/90 font-medium mt-0.5">
-              Konsultasikan suplmenmu secara instan
+              Konsultasikan suplemenmu secara instan
             </span>
           </div>
         </CardHeader>
@@ -44,7 +122,6 @@ export default function LiveChat() {
             Hari ini
           </p>
           
-          {/* Default initial message (Optional, if chat is empty) */}
           {messages.length === 0 && (
             <div className="flex items-start gap-3 max-w-[95%]">
               <Avatar icon={<Activity size={18}/>} classNames={{base: "bg-gradient-to-br from-red-600 to-red-800 text-white shadow-md mt-1 shrink-0"}} size="sm" />
@@ -54,7 +131,6 @@ export default function LiveChat() {
             </div>
           )}
 
-          {/* Render ChatBubble dengan currentUserId */}
           {messages.map((msg) => (
             <ChatBubble 
               key={msg.id} 
@@ -80,19 +156,71 @@ export default function LiveChat() {
           <div ref={messagesEndRef} className="h-1" />
         </CardBody>
 
-        {/* Chat Input */}
-        <CardFooter className="rounded-b-3xl border-t border-slate-100 bg-white p-4 sm:p-5">
-          <form className="flex w-full items-end gap-2.5" onSubmit={handleSendMessage}>
-            <Input
+        {/* Chat Footer dengan Hard Filter */}
+        <CardFooter className="flex-col rounded-b-3xl border-t border-slate-100 bg-white p-4 gap-3">
+          
+          {/* Area Hard Filter */}
+          <div className="flex w-full items-center gap-2 overflow-x-auto pb-1 no-scrollbar">
+            <div className="flex items-center justify-center h-8 w-8 rounded-full bg-slate-100 shrink-0 text-slate-500">
+              <SlidersHorizontal size={14} />
+            </div>
+
+            <Select
+              size="sm"
+              placeholder="Rentang Harga"
+              className="w-40 shrink-0"
+              selectedKeys={rentangHarga}
+              onChange={handleHargaChange}
+              classNames={{
+                trigger: "bg-slate-50 shadow-none border border-slate-200",
+              }}
+            >
+              <SelectItem key="<100k">Di bawah Rp 100.000</SelectItem>
+              <SelectItem key="100k-300k">Rp 100rb - 300rb</SelectItem>
+              <SelectItem key="300k-500k">Rp 300rb - 500rb</SelectItem>
+              <SelectItem key=">500k">Lebih dari Rp 500.000</SelectItem>
+            </Select>
+
+            <Select
+              size="sm"
+              placeholder="Kandungan Nutrisi"
+              className="w-44 shrink-0"
+              selectedKeys={rentangKandungan}
+              onChange={handleKandunganChange}
+              classNames={{
+                trigger: "bg-slate-50 shadow-none border border-slate-200",
+              }}
+            >
+              <SelectItem key="<10">Di bawah 10 gr/mg</SelectItem>
+              <SelectItem key="10-30">10 - 30 gr/mg</SelectItem>
+              <SelectItem key="30-50">30 - 50 gr/mg</SelectItem>
+              <SelectItem key=">50">Lebih dari 50 gr/mg</SelectItem>
+            </Select>
+          </div>
+
+          {/* Form Input Chat */}
+          <form className="flex w-full items-end gap-2" onSubmit={handleSendMessage}>
+            <Textarea
+              minRows={1} 
+              maxRows={5} 
               value={input}
               onChange={(e) => setInput(e.target.value)}
+              onKeyDown={(e) => {
+                if (e.key === "Enter" && !e.shiftKey) {
+                  e.preventDefault();
+                  if (input.trim()) {
+                    handleSendMessage(e as any);
+                  }
+                }
+              }}
               disabled={isLoading}
-              placeholder="Contoh: Saya ingin vitamin untuk meningkatkan imun..."
+              placeholder="Ceritakan tujuan kesehatan atau keluhan Anda..."
               variant="flat"
               radius="lg"
               classNames={{
-                input: "text-sm placeholder:text-slate-400",
-                inputWrapper: "bg-slate-100 shadow-none hover:bg-slate-200/70 focus-within:!bg-white focus-within:ring-2 focus-within:ring-red-100 transition-all",
+                input: "text-sm resize-none placeholder:text-slate-400",
+                inputWrapper:
+                  "bg-slate-100 shadow-none hover:bg-slate-200/70 focus-within:!bg-white focus-within:ring-2 focus-within:ring-red-100 items-center py-2 transition-all",
               }}
               fullWidth
             />
@@ -100,7 +228,7 @@ export default function LiveChat() {
               type="submit" 
               isLoading={isLoading} 
               isIconOnly 
-              className="shrink-0 rounded-xl bg-gradient-to-r from-red-600 to-red-700 text-white shadow-md shadow-red-600/20 hover:shadow-lg hover:shadow-red-600/40 hover:-translate-y-0.5 transition-all w-12 h-12"
+              className="shrink-0 rounded-xl bg-gradient-to-r from-red-600 to-red-700 text-white shadow-md shadow-red-600/20 hover:shadow-lg hover:shadow-red-600/40 hover:-translate-y-0.5 transition-all w-12 h-12 mb-1"
             >
               {!isLoading && <Send size={18} className="ml-1" />}
             </Button>

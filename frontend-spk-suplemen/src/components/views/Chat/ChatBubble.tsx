@@ -165,7 +165,7 @@ function ChatSuplemenCard({
 
         <Button
           as={Link}
-          href={`/suplemens/${suplemen.id || index}`}
+          href={`/suplements/${suplemen.id || index}`}
           size="sm"
           className="w-full bg-gradient-to-r from-red-600 to-red-800 text-white font-semibold rounded-xl shadow-md shadow-red-600/20 hover:shadow-lg hover:shadow-red-600/40 hover:-translate-y-0.5 transition-all"
           endContent={<Eye size={16} />}
@@ -186,8 +186,7 @@ export default function ChatBubble({
   currentUserId: number | null;
 }) {
   const isUser = message.role === "user";
-
-  const recommendedItems = message.suplemens || message.products || message.houses || [];
+  const recommendedItems = message.supplements || message.suplemens || message.products || message.houses || [];
 
   return (
     <div
@@ -195,7 +194,6 @@ export default function ChatBubble({
         isUser ? "self-end flex-row-reverse" : ""
       }`}
     >
-      {/* Avatar AI Consultant */}
       {!isUser && (
         <Avatar
           icon={<Sparkles size={18} />}
@@ -206,7 +204,6 @@ export default function ChatBubble({
         />
       )}
 
-      {/* Bubble Container */}
       <div
         className={`p-3.5 text-sm shadow-sm flex flex-col gap-3 transition-all ${
           isUser
@@ -214,10 +211,8 @@ export default function ChatBubble({
             : "bg-white border border-slate-100 text-slate-700 rounded-2xl rounded-tl-sm shadow-slate-200/40"
         }`}
       >
-        {/* Pesan Pembuka */}
         {message.text && <p className="leading-relaxed">{message.text}</p>}
 
-        {/* Daftar Card Rekomendasi Suplemen */}
         {recommendedItems.length > 0 && (
           <div className="flex flex-col gap-4 my-2 w-[280px] sm:w-[320px]">
             {recommendedItems.map((suplemen: any, index: number) => (

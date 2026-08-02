@@ -33,11 +33,11 @@ Favorite.init({
       key: 'id'
     }
   },
-  suplemen_id: { // Ubah house_id menjadi suplemen_id
+  suplemen_id: { 
     type: DataTypes.INTEGER,
     allowNull: false,
     references: {
-      model: 'suplemens', // Sesuaikan dengan nama tabel suplemen di database kamu
+      model: 'suplemens', 
       key: 'id'
     }
   },
@@ -47,7 +47,7 @@ Favorite.init({
   timestamps: true,
 });
 
-// Sesuaikan relasi antar model
+
 Favorite.belongsTo(Suplemen, { foreignKey: 'suplemen_id' });
 Suplemen.hasMany(Favorite, { foreignKey: 'suplemen_id' });
 

@@ -1,14 +1,14 @@
 import { useState, useRef, useEffect } from "react";
 import api from "@/utils/api";
 import instance from "@/libs/axios/instance";
-import { Message } from "./types"; // Pastikan path import sesuai
+import { Message } from "./types";
 
 export function useChat() {
   const [messages, setMessages] = useState<Message[]>([
     {
       id: 1,
       role: "admin",
-      text: "Halo! 👋 Saya konsultan nutrisi AI Anda. Apakah ada keluhan kesehatan atau tujuan kebugaran yang ingin Anda capai hari ini?",
+      text: "Halo! 👋 Saya konsultan nutrisi AI Anda. Silakan atur filter rentang harga dan kandungan nutrisi jika diperlukan, lalu ceritakan keluhan atau target kesehatan yang ingin Anda capai hari ini!",
     },
   ]);
   const [input, setInput] = useState("");
@@ -17,8 +17,14 @@ export function useChat() {
 
   const [currentUserId, setCurrentUserId] = useState<number | null>(null);
   const [userFavorites, setUserFavorites] = useState<any[]>([]);
-
   const [isMounted, setIsMounted] = useState(false);
+
+  const [filters, setFilters] = useState({
+    hargaMin: "",
+    hargaMax: "",
+    kandungan_nutrisiMin: "",
+    kandungan_nutrisiMax: "",
+  });
 
   useEffect(() => {
     setIsMounted(true);
@@ -103,43 +109,66 @@ export function useChat() {
     setIsLoading(true);
 
     try {
-      const response = await api.post("/chat/send", {
+      const payload = {
         pesan: userMessage.text,
+        hargaMin: filters.hargaMin ? Number(filters.hargaMin) : undefined,
+        hargaMax: filters.hargaMax ? Number(filters.hargaMax) : undefined,
+        kandungan_nutrisiMin: filters.kandungan_nutrisiMin ? Number(filters.kandungan_nutrisiMin) : undefined,
+        kandungan_nutrisiMax: filters.kandungan_nutrisiMax ? Number(filters.kandungan_nutrisiMax) : undefined,
+      };
+
+      const response = await api.post("/chat/send", payload);
+
+      const { balasan_ai, rekomendasi } = response.data.data;
+
+      const daftarRekomendasi = (rekomendasi || []).map((supplement: any) => {
+        const isFav = userFavorites.find(
+          (f: any) => f.supplement_id === supplement.id
+        );
+        return {
+          ...supplement,
+          isFavorite: !!isFav,
+          favoriteId: isFav ? isFav.id : null,
+        };
       });
 
-      const daftarRekomendasi = response.data.data.rekomendasi
-        .slice(0, 3)
-        .map((supplement: any) => {
-          const isFav = userFavorites.find(
-            (f: any) => f.supplement_id === supplement.id
-          );
-          return {
-            ...supplement,
-            isFavorite: !!isFav,
-            favoriteId: isFav ? isFav.id : null,
-          };
-        });
-
       setMessages((prev) => [
         ...prev,
         {
           id: Date.now() + 1,
           role: "admin",
-          text: "Berikut adalah rekomendasi suplemen terbaik berdasarkan kebutuhan Anda:",
-          supplements: daftarRekomendasi, // Ubah dari houses ke supplements
-          outroText: "Apakah ada kriteria lain yang ingin Anda tambahkan? (Misal: bentuk kapsul atau bubuk)",
+          text:
+            balasan_ai ||
+            "Berikut adalah rekomendasi suplemen terbaik berdasarkan kebutuhan Anda:", 
+          supplements: daftarRekomendasi,
+          outroText: "Apakah ada kriteria atau keluhan lain yang ingin Anda sampaikan?",
         },
       ]);
-    } catch (error) {
-      console.error("Error fetching chat response:", error);
-      setMessages((prev) => [
-        ...prev,
-        {
-          id: Date.now() + 1,
-          role: "admin",
-          text: "Maaf, sistem AI atau koneksi sedang bermasalah. Silakan coba lagi.",
-        },
-      ]);
+    } catch (error: any) {
+      if (error.response && error.response.status === 404) {
+        const errorData = error.response.data;
+        setMessages((prev) => [
+          ...prev,
+          {
+            id: Date.now() + 1,
+            role: "admin",
+            text:
+              errorData.data?.balasan_ai ||
+              errorData.message ||
+              "Maaf, saya tidak menemukan suplemen yang sesuai dengan filter tersebut.",
+          },
+        ]);
+      } else {
+        console.error("Kesalahan Sistem/Jaringan:", error);
+        setMessages((prev) => [
+          ...prev,
+          {
+            id: Date.now() + 1,
+            role: "admin",
+            text: "Maaf, sistem AI atau koneksi sedang bermasalah. Silakan coba lagi.",
+          },
+        ]);
+      }
     } finally {
       setIsLoading(false);
     }
@@ -153,5 +182,7 @@ export function useChat() {
     messagesEndRef,
     handleSendMessage,
     currentUserId,
+    filters,
+    setFilters,
   };
 }

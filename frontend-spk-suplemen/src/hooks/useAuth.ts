@@ -8,29 +8,29 @@ export const useAuth = () => {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-const fetchUser = async () => {
+    const fetchUser = async () => {
       try {
-        // 1. Ambil token dari cookie
         const token = Cookies.get("token");
 
-        // 2. Jika tidak ada token, langsung batalkan pemanggilan API
         if (!token) {
           setUser(null);
           setIsLoading(false);
           return;
         }
 
-        // 3. Panggil API dengan melampirkan KTP (Token) di Headers
         const response = await instance.get("/auth/me", {
           headers: {
-            Authorization: `Bearer ${token}`, // <-- INI KUNCI UTAMANYA!
+            Authorization: `Bearer ${token}`,
           },
         });
-        
-        setUser(response.data.data); 
+
+        setUser(response.data.data);
       } catch (error) {
-        console.error("Gagal mengambil data user:", error);
         setUser(null);
+
+        Cookies.remove("token", { path: "/" });
+        
+        localStorage.removeItem("chat_history");
       } finally {
         setIsLoading(false);
       }
