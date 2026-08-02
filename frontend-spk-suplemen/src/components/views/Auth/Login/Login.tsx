@@ -19,7 +19,6 @@ export const Login = () => {
   const [isVisible, setIsVisible] = useState(false);
   const toggleVisibility = () => setIsVisible(!isVisible);
 
-  // Semua logika dari useLogin dipertahankan 100%
   const {
     identifier,
     setIdentifier,

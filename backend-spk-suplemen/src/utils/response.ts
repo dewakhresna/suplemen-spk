@@ -20,7 +20,6 @@ export default {
   },
 
   error(res: Response, error: unknown, message: string) {
-    // Error Validasi Yup
     if (error instanceof Yup.ValidationError) {
       return res.status(400).json({
         meta: {

@@ -10,17 +10,15 @@ const useDetailUser = () => {
   const { id } = router.query;
   const { setToaster } = useContext(ToasterContext);
 
-  // 1. Fetching Data User by ID
   const { data, isLoading: isLoadingUser } = useQuery({
     queryKey: ["User", id],
     queryFn: async () => {
       const res = await userServices.getUserById(Number(id));
-      return res.data.data; // Sesuaikan dengan struktur response backend Anda
+      return res.data.data;
     },
     enabled: !!id && router.isReady,
   });
 
-  // 2. Mutation untuk Update Data User
   const {
     mutate: mutateUpdateUser,
     isPending: isPendingUpdateUser,
@@ -35,7 +33,7 @@ const useDetailUser = () => {
         type: "success",
         message: "User profile updated successfully!",
       });
-      router.push("/admin/user"); // Kembali ke halaman tabel setelah sukses edit
+      router.push("/admin/user");
     },
     onError: (error: any) => {
       setToaster({

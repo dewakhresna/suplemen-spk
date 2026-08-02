@@ -39,7 +39,6 @@ export const useFavoriteSuplemen = () => {
         return;
       }
 
-      // Pastikan backend favorit sudah di-set untuk memanggil data beserta Suplemen
       const favRes = await instance.get(`/favorites?userId=${userId}`);
       setFavorites(favRes.data.data);
     } catch (err: any) {

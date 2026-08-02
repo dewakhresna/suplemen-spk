@@ -113,7 +113,6 @@ function FavoriteSuplemenCard({
   );
 }
 
-// Komponen Utama List
 export default function FavoriteList() {
   const { favorites, isLoading, error, removeFavorite } = useFavoriteSuplemen();
 

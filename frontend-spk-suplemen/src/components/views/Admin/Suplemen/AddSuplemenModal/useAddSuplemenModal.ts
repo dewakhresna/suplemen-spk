@@ -44,7 +44,6 @@ const useAddSuplemenModal = () => {
   };
 
   const addSuplemenAndDetail = async (payload: any) => {
-    // 1. Simpan data Suplemen (Kriteria TOPSIS)
     const suplemenPayload = {
       nama: payload.nama,
       c1_harga: payload.c1_harga,
@@ -53,13 +52,10 @@ const useAddSuplemenModal = () => {
       c4_efektivitas_manfaat: payload.c4_efektivitas_manfaat,
     };
     
-    // Asumsi service ini memanggil POST /api/suplemen
     const suplemenRes = await suplemenServices.addSuplemen(suplemenPayload);
     
-    // Ambil ID suplemen yang baru dibuat
     const newSuplemenId = suplemenRes.data?.data?.id || suplemenRes.data?.data?.suplemen?.id; 
 
-    // 2. Simpan data Suplemen Detail (beserta Upload Gambar)
     const formData = new FormData();
     formData.append("suplemen_id", String(newSuplemenId));
     formData.append("link", payload.link);
@@ -78,7 +74,6 @@ const useAddSuplemenModal = () => {
       formData.append("image_3", payload.image_3[0]);
     }
 
-    // Pastikan endpoint backend ini sesuai dengan route multer di express kamu
     await instance.post("/suplemen-details/create", formData, {
       headers: { "Content-Type": "multipart/form-data" }
     });

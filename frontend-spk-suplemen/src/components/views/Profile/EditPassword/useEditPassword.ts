@@ -21,15 +21,12 @@ export const useEditPassword = () => {
 
   const [isSaving, setIsSaving] = useState<boolean>(false);
 
-  // Deteksi ketikan user
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  // Eksekusi pembaruan sandi
   const handleSaveChanges = async () => {
-    // Validasi dasar di frontend sebelum dikirim ke backend
     if (!formData.oldPassword || !formData.password || !formData.confirmPassword) {
       setToaster({ type: "error", message: "Semua kolom password wajib diisi." });
       return;

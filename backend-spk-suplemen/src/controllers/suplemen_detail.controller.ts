@@ -28,9 +28,8 @@ export default {
 
   async create(req: Request, res: Response) {
     try {
-      const files = req.files as any; // Ambil data file dari Multer
+      const files = req.files as any;
       
-      // Ubah nilainya menjadi path relatif agar aman saat di-hosting
       if (files?.image_1) req.body.image_1 = `/uploads/${files.image_1[0].filename}`;
       if (files?.image_2) req.body.image_2 = `/uploads/${files.image_2[0].filename}`;
       if (files?.image_3) req.body.image_3 = `/uploads/${files.image_3[0].filename}`;

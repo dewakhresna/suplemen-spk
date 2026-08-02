@@ -1,9 +1,7 @@
 import express from "express";
 import authMiddleware from "../middlewares/auth.middleware.js";
 import chatController from "../controllers/chat.controller.js";
-import houseController from "../controllers/house.controller.js";
 import authController from "../controllers/auth.controller.js";
-import houseDetailController from "../controllers/house_detail.controller.js";
 import uploadMiddleware from "../middlewares/upload.middleware.js";
 import uploadController from "../controllers/upload.controller.js";
 import userController from "../controllers/user.controller.js";
@@ -14,30 +12,6 @@ import suplemenDetailController from "../controllers/suplemen_detail.controller.
 const router = express.Router();
 
 router.post("/chat/send", chatController.chat);
-
-// --- RUTE HOUSE ---
-router.post("/houses/create", houseController.create);
-router.get("/houses", houseController.getAll);
-router.get("/houses/:id", houseController.getById);
-router.put("/houses/:id", houseController.update);
-router.delete("/houses/:id", houseController.delete);
-
-// --- RUTE HOUSE DETAILS ---
-router.post(
-  "/house-details/create",
-  uploadMiddleware.fields([
-    { name: "image_1", maxCount: 1 },
-    { name: "image_2", maxCount: 1 },
-    { name: "image_3", maxCount: 1 },
-  ]),
-  houseDetailController.create,
-);
-router.get(
-  "/house-details/house/:house_id",
-  houseDetailController.getByHouseId,
-);
-router.put("/house-details/house/:house_id", houseDetailController.update);
-router.delete("/house-details/house/:house_id", houseDetailController.delete);
 
 
 // --- RUTE SUPLEMEN ---

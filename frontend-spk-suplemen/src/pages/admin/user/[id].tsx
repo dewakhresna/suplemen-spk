@@ -4,7 +4,6 @@ import { Spinner } from "@heroui/react";
 import useDetailUser from "@/hooks/useDetailUser";
 
 const AdminDetailUserPage = () => {
-  // Panggil logika data dan mutasi
   const {
     dataUser,
     isLoadingUser,

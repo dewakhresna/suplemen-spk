@@ -31,7 +31,6 @@ export default function LiveChat() {
   const [rentangHarga, setRentangHarga] = useState<Set<string>>(new Set([]));
   const [rentangKandungan, setRentangKandungan] = useState<Set<string>>(new Set([]));
 
-  // Handler untuk Harga Suplemen
   const handleHargaChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const val = e.target.value;
     setRentangHarga(new Set([val]));
@@ -41,18 +40,18 @@ export default function LiveChat() {
 
     switch (val) {
       case "<100k":
-        max = "100000"; // Di bawah 100rb
+        max = "100000";
         break;
       case "100k-300k":
         min = "100000";
-        max = "300000"; // 100rb s/d 300rb
+        max = "300000";
         break;
       case "300k-500k":
         min = "300000";
-        max = "500000"; // 300rb s/d 500rb
+        max = "500000";
         break;
       case ">500k":
-        min = "500000"; // Di atas 500rb
+        min = "500000";
         break;
       default:
         min = "";
@@ -62,7 +61,6 @@ export default function LiveChat() {
     setFilters({ ...filters, hargaMin: min, hargaMax: max });
   };
 
-  // Handler untuk Kandungan Nutrisi
   const handleKandunganChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const val = e.target.value;
     setRentangKandungan(new Set([val]));

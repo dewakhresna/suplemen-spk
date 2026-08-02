@@ -4,8 +4,6 @@ import cors from "cors";
 import sequelize from "./db.js";
 
 import "./models/user.model.js";
-import "./models/house.model.js";
-import "./models/house_detail.model.js";
 import "./models/favorite.model.js";
 import "./models/suplemen.model.js";
 import "./models/suplemen_detail.model.js";

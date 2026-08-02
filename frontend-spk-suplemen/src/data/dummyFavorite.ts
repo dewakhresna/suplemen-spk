@@ -8,7 +8,7 @@ export interface FavoriteSupplement {
   reviews: number;
   description: string;
   imageUrl: string;
-  badge?: string; // Optional: untuk label seperti "Terlaris", "Diskon", dll.
+  badge?: string;
 }
 
 // Data Dummy List Produk Favorit

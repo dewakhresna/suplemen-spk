@@ -45,7 +45,6 @@ const DetailUserData = (props: PropTypes) => {
     }
   }, [isSuccessUpdate, resetUpdateInfo]);
 
-  // TEMA DIUBAH KE MERAH (red-300, red-500, red-100)
   const inputClassNames = {
     inputWrapper:
       "bg-white border-slate-200 shadow-sm hover:border-red-300 focus-within:!border-red-500 focus-within:!ring-2 focus-within:!ring-red-100 transition-all duration-300 rounded-xl h-12",

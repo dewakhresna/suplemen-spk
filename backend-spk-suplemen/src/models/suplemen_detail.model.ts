@@ -59,7 +59,7 @@ SuplemenDetail.init({
   timestamps: true,
 });
 
-// Mendefinisikan Relasi Database
+
 Suplemen.hasOne(SuplemenDetail, { foreignKey: 'suplemen_id', onDelete: 'CASCADE' });
 SuplemenDetail.belongsTo(Suplemen, { foreignKey: 'suplemen_id' });
 
