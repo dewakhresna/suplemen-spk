@@ -40,7 +40,7 @@ export default function Navbar() {
           <Link href="/suplements" className={getLinkClass('/suplements')}>
             Suplements
           </Link>
-          <Link href="/benefits" className={getLinkClass('/benefits')}>
+          <Link href="/about" className={getLinkClass('/about')}>
             About
           </Link>
           <Link href="/contact" className={getLinkClass('/contact')}>

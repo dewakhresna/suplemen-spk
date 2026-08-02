@@ -1,5 +1,6 @@
 "use client";
 
+import Head from "next/head";
 import React, { useRef } from "react";
 import Link from "next/link";
 import { Card, Input, Button, Avatar, Divider, Spinner } from "@heroui/react";
@@ -16,13 +17,27 @@ import { useEditProfile } from "./useEditProfile";
 import environment from "@/config/environment";
 
 export default function EditProfilePage() {
+  const baseUrl = environment.Domain?.replace(/\/$/, "") || "http://localhost:5000";
+
   return (
-    <main className="min-h-screen bg-slate-50 py-12 px-4 sm:px-6 flex justify-center items-start font-sans">
-      <div className="w-full max-w-[900px]">
-        <PageNavigation />
-        <EditProfileCard />
-      </div>
-    </main>
+    <>
+      <Head>
+        <title>Edit Profile | Vital Prime</title>
+        <link
+          rel="icon"
+          href={`${environment.Domain}/uploads/logo-vitalprime.png`}
+          type="image/png"
+        ></link>
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+      </Head>
+
+      <main className="min-h-screen bg-slate-50 py-12 px-4 sm:px-6 flex justify-center items-start font-sans">
+        <div className="w-full max-w-[900px]">
+          <PageNavigation />
+          <EditProfileCard />
+        </div>
+      </main>
+    </>
   );
 }
 
@@ -34,7 +49,11 @@ const PageNavigation = () => {
         href="/profile"
         className="inline-flex items-center gap-2 rounded-xl px-4 py-2.5 text-sm font-semibold text-slate-500 transition-all duration-300 hover:bg-white hover:text-red-600 hover:shadow-md hover:shadow-red-900/5 group"
       >
-        <ArrowLeft size={18} strokeWidth={2.2} className="group-hover:-translate-x-1 transition-transform" />
+        <ArrowLeft
+          size={18}
+          strokeWidth={2.2}
+          className="group-hover:-translate-x-1 transition-transform"
+        />
         Kembali ke Profil
       </Link>
 
@@ -84,7 +103,7 @@ const EditProfileCard = () => {
     <Card className="w-full bg-white rounded-3xl shadow-xl shadow-slate-200/50 border border-slate-100 p-6 sm:p-10 lg:p-12 transition-all duration-300 relative overflow-hidden">
       {/* Subtle Premium Background Glow */}
       <div className="absolute top-0 right-0 w-64 h-64 bg-gradient-to-bl from-red-50 to-transparent rounded-bl-full opacity-60 z-0"></div>
-      
+
       <div className="relative z-10">
         <PageHeader />
 
@@ -166,16 +185,19 @@ const ProfileAvatarUploader = ({
         className="hidden"
       />
 
-      <div className="relative group cursor-pointer" onClick={handleButtonClick}>
+      <div
+        className="relative group cursor-pointer"
+        onClick={handleButtonClick}
+      >
         {/* Premium Red-Gold Ring Background */}
         <div className="absolute inset-0 bg-gradient-to-tr from-red-600 via-red-500 to-amber-400 rounded-full blur-md opacity-40 scale-105 group-hover:scale-110 transition-transform duration-500"></div>
-        
+
         <div className="relative p-1.5 bg-gradient-to-tr from-red-700 via-red-600 to-amber-500 rounded-full shadow-xl shadow-red-700/20 group-hover:shadow-2xl group-hover:shadow-red-700/30 transition-shadow duration-300">
           <Avatar
             src={getImageUrl(profilePicture)}
             className={`w-32 h-32 text-large border-4 border-white bg-white transition-transform duration-500 group-hover:scale-[1.02] ${isUploading ? "opacity-50" : ""}`}
           />
-          
+
           {/* Loading Spinner Overlap saat mengunggah */}
           {isUploading ? (
             <div className="absolute inset-1.5 bg-slate-900/30 rounded-full flex items-center justify-center backdrop-blur-sm z-10">
@@ -242,7 +264,9 @@ const ProfileForm = ({
         labelPlacement="outside"
         placeholder="Masukkan username"
         variant="bordered"
-        startContent={<AtSign className="text-slate-400 w-5 h-5 mr-2 shrink-0" />}
+        startContent={
+          <AtSign className="text-slate-400 w-5 h-5 mr-2 shrink-0" />
+        }
         classNames={inputClassNames}
         value={formData.username}
         onChange={onChange}

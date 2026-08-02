@@ -122,7 +122,7 @@ export const useEditProfile = () => {
     if (formData.profilePicture !== originalPhoto && formData.profilePicture !== "user.jpg") {
       handleDeleteFile(formData.profilePicture, () => {});
     }
-    router.push("/profile");
+    router.push("/admin/profile");
   };
 
   return {

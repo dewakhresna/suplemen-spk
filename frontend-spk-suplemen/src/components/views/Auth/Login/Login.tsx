@@ -13,6 +13,7 @@ import {
 } from "@heroui/react";
 import { HeartPulse, Mail, Lock, Eye, EyeOff, ArrowLeft } from "lucide-react";
 import { useLogin } from "./useLogin";
+import environment from "@/config/environment";
 
 export const Login = () => {
   const [isVisible, setIsVisible] = useState(false);
@@ -39,10 +40,13 @@ export const Login = () => {
     setForgotMessage,
   } = useLogin();
 
+  const baseUrl = environment.Domain?.replace(/\/$/, "") || "http://localhost:5000";
+
   return (
     <>
       <Head>
         <title>Masuk | Vital Prime</title>
+        <link rel="icon" href={`${baseUrl}/uploads/logo-vitalprime.png`} type="image/png"></link>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </Head>
 

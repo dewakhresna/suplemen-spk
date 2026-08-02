@@ -4,6 +4,7 @@ import Link from "next/link";
 import { Input, Button, Checkbox } from "@heroui/react";
 import { HeartPulse, Mail, Lock, Eye, EyeOff, ArrowLeft, User, AtSign } from "lucide-react";
 import { useRegister } from "./useRegister"; 
+import environment from "@/config/environment";
 
 export const Register = () => {
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
@@ -23,10 +24,13 @@ export const Register = () => {
     handleRegister 
   } = useRegister();
 
+  const baseUrl = environment.Domain?.replace(/\/$/, "") || "http://localhost:5000";
+
   return (
     <>
       <Head>
         <title>Daftar Akun | Vital Prime</title>
+        <link rel="icon" href={`${baseUrl}/uploads/logo-vitalprime.png`} type="image/png"></link>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </Head>
 

@@ -2,12 +2,16 @@ import Head from "next/head";
 import Navbar from "@/components/views/Home/Navbar"; 
 import Footer from "@/components/views/Home/Footer"; 
 import Contact from "@/components/views/Home/Contact/Contact"; 
+import environment from "@/config/environment";
 
 export default function ContactPage() {
+  const baseUrl = environment.Domain?.replace(/\/$/, "") || "http://localhost:5000";
+
   return (
     <>
       <Head>
-        <title>Contact | EstatePrime</title>
+        <title>Contact | Vital Prime</title>
+        <link rel="icon" href={`${baseUrl}/uploads/logo-vitalprime.png`} type="image/png"></link>
       </Head>
       
       <div className="min-h-screen flex flex-col bg-white text-slate-900 font-sans selection:bg-blue-100 selection:text-blue-900">

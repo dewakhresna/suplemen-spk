@@ -4,15 +4,19 @@ import HeroSection from "@/components/views/Home/HeroSection";
 import Suplements from "@/components/views/Home/Suplements/Suplements";
 import LiveChat from "@/components/views/Chat/LiveChat";
 import Footer from "@/components/views/Home/Footer";
+import environment from "@/config/environment";
 
 export default function Home() {
+  const baseUrl = environment.Domain?.replace(/\/$/, "") || "http://localhost:5000";
+
   return (
     <>
       <Head>
-        <title>EstatePrime | Find Your Dream Home</title>
+        <title>Vital Prime | Find Your Suplement</title>
+        <link rel="icon" href={`${baseUrl}/uploads/logo-vitalprime.png`} type="image/png"></link>
         <meta
           name="description"
-          content="Browse thousands of premium real estate listings with live chat support."
+          content="Browse hundreds of premium supplements with live chat support."
         />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </Head>

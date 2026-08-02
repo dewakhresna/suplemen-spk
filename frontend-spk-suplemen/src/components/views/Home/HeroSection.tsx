@@ -1,5 +1,6 @@
 import { Button } from "@heroui/react";
 import { ShoppingBag, ShieldCheck } from "lucide-react";
+import Link from "next/link";
 
 export default function HeroSection() {
   return (
@@ -19,7 +20,9 @@ export default function HeroSection() {
         </p>
         
         <div className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4">
-          <Button 
+          <Button
+            as={Link}
+            href="/suplements" 
             size="lg" 
             color="primary" 
             endContent={<ShoppingBag size={18} />}

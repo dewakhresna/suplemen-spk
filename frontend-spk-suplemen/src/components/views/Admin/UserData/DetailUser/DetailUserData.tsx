@@ -45,9 +45,10 @@ const DetailUserData = (props: PropTypes) => {
     }
   }, [isSuccessUpdate, resetUpdateInfo]);
 
+  // TEMA DIUBAH KE MERAH (red-300, red-500, red-100)
   const inputClassNames = {
     inputWrapper:
-      "bg-white border-slate-200 shadow-sm hover:border-blue-300 focus-within:!border-blue-500 focus-within:!ring-2 focus-within:!ring-blue-100 transition-all duration-300 rounded-xl h-12",
+      "bg-white border-slate-200 shadow-sm hover:border-red-300 focus-within:!border-red-500 focus-within:!ring-2 focus-within:!ring-red-100 transition-all duration-300 rounded-xl h-12",
     label: "text-slate-700 font-medium pb-1",
   };
 
@@ -57,12 +58,12 @@ const DetailUserData = (props: PropTypes) => {
       <CardHeader className="flex flex-col items-start gap-2 border-b border-slate-100 pb-6 mb-2">
         <div className="flex items-center gap-3">
           <span className="text-3xl">👤</span>
-          <h1 className="text-2xl font-bold text-blue-700 tracking-tight">
-            User Information
+          <h1 className="text-2xl font-bold text-red-700 tracking-tight">
+            Informasi Pengguna
           </h1>
         </div>
         <p className="text-sm font-medium text-slate-500 mt-1">
-          Manage and update user credentials and access roles.
+          Kelola dan perbarui kredensial serta hak akses pengguna sistem suplemen.
         </p>
       </CardHeader>
 
@@ -74,9 +75,9 @@ const DetailUserData = (props: PropTypes) => {
         >
           
           {/* --- SECTION 1: USER DETAILS --- */}
-          <div className="flex flex-col gap-5 bg-blue-50/40 border border-slate-100 rounded-2xl p-5 sm:p-6">
-            <h3 className="text-sm font-bold text-blue-700 uppercase tracking-wider mb-2">
-              Profile Details
+          <div className="flex flex-col gap-5 bg-red-50/40 border border-slate-100 rounded-2xl p-5 sm:p-6">
+            <h3 className="text-sm font-bold text-red-700 uppercase tracking-wider mb-2">
+              Detail Profil
             </h3>
             
             <div className="flex flex-col sm:flex-row gap-6">
@@ -87,7 +88,7 @@ const DetailUserData = (props: PropTypes) => {
                   render={({ field }) => (
                     <Input
                       {...field}
-                      label="Full Name"
+                      label="Nama Lengkap"
                       variant="bordered"
                       labelPlacement="outside"
                       type="text"
@@ -127,7 +128,7 @@ const DetailUserData = (props: PropTypes) => {
                   render={({ field }) => (
                     <Input
                       {...field}
-                      label="Email Address"
+                      label="Alamat Email"
                       variant="bordered"
                       labelPlacement="outside"
                       type="email"
@@ -146,7 +147,7 @@ const DetailUserData = (props: PropTypes) => {
                   render={({ field }) => (
                     <Input
                       {...field}
-                      label="System Role (e.g., admin, user)"
+                      label="Role Sistem (cth: admin, user)"
                       variant="bordered"
                       labelPlacement="outside"
                       type="text"
@@ -163,17 +164,17 @@ const DetailUserData = (props: PropTypes) => {
           {/* --- CARD FOOTER / ACTION BUTTON --- */}
           <div className="flex justify-end mt-2">
             <Button
-              className="w-full sm:w-auto bg-gradient-to-r from-blue-600 to-blue-700 text-white font-medium shadow-md shadow-blue-500/20 hover:shadow-lg hover:shadow-blue-500/30 hover:-translate-y-0.5 hover:from-blue-700 hover:to-blue-800 transition-all duration-300 rounded-xl px-10 h-12 disabled:opacity-60 disabled:cursor-not-allowed disabled:hover:translate-y-0"
+              className="w-full sm:w-auto bg-gradient-to-r from-red-600 to-red-700 text-white font-medium shadow-md shadow-red-500/20 hover:shadow-lg hover:shadow-red-500/30 hover:-translate-y-0.5 hover:from-red-700 hover:to-red-800 transition-all duration-300 rounded-xl px-10 h-12 disabled:opacity-60 disabled:cursor-not-allowed disabled:hover:translate-y-0"
               type="submit"
               disabled={isPendingUpdate || !dataUser?.id}
             >
               {isPendingUpdate ? (
                 <div className="flex items-center gap-2">
                   <Spinner size="sm" color="white" />
-                  <span>Saving Changes...</span>
+                  <span>Menyimpan...</span>
                 </div>
               ) : (
-                "Save Changes"
+                "Simpan Perubahan"
               )}
             </Button>
           </div>

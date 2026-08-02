@@ -173,7 +173,7 @@ export default function FavoriteList() {
           </p>
           <Button 
             as={Link}
-            href="/suplemens"
+            href="/suplements"
             size="lg"
             className="bg-gradient-to-r from-red-600 to-red-800 text-white font-semibold rounded-2xl px-8 shadow-lg shadow-red-600/20 hover:shadow-xl hover:shadow-red-600/40 hover:-translate-y-1 transition-all duration-300"
           >
