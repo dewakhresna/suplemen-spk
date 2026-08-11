@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 import {
   Card,
   CardHeader,
@@ -16,6 +17,8 @@ import { useChat } from "./useChat";
 import ChatBubble from "./ChatBubble";
 
 export default function LiveChat() {
+  const router = useRouter();
+
   const {
     messages,
     input,
@@ -90,6 +93,20 @@ export default function LiveChat() {
     setFilters({ ...filters, kandungan_nutrisiMin: min, kandungan_nutrisiMax: max });
   };
 
+  const onChatSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    
+    if (!currentUserId) {
+      alert("Silakan login terlebih dahulu untuk menggunakan fitur Live Chat Konsultasi AI.");
+      router.push("/login");
+      return;
+    }
+
+    if (input.trim()) {
+      handleSendMessage(e as any);
+    }
+  };
+
   return (
     <div className="sticky top-28 h-[calc(100vh-8rem)] min-h-[500px] max-h-[700px]">
       <Card className="flex h-full flex-col rounded-3xl border border-red-50 bg-white shadow-2xl shadow-red-900/5">
@@ -154,10 +171,8 @@ export default function LiveChat() {
           <div ref={messagesEndRef} className="h-1" />
         </CardBody>
 
-        {/* Chat Footer dengan Hard Filter */}
         <CardFooter className="flex-col rounded-b-3xl border-t border-slate-100 bg-white p-4 gap-3">
           
-          {/* Area Hard Filter */}
           <div className="flex w-full items-center gap-2 overflow-x-auto pb-1 no-scrollbar">
             <div className="flex items-center justify-center h-8 w-8 rounded-full bg-slate-100 shrink-0 text-slate-500">
               <SlidersHorizontal size={14} />
@@ -196,8 +211,7 @@ export default function LiveChat() {
             </Select>
           </div>
 
-          {/* Form Input Chat */}
-          <form className="flex w-full items-end gap-2" onSubmit={handleSendMessage}>
+          <form className="flex w-full items-end gap-2" onSubmit={onChatSubmit}>
             <Textarea
               minRows={1} 
               maxRows={5} 
@@ -206,6 +220,13 @@ export default function LiveChat() {
               onKeyDown={(e) => {
                 if (e.key === "Enter" && !e.shiftKey) {
                   e.preventDefault();
+                  
+                  if (!currentUserId) {
+                    alert("Silakan login terlebih dahulu untuk menggunakan fitur Live Chat Konsultasi AI.");
+                    router.push("/login");
+                    return;
+                  }
+
                   if (input.trim()) {
                     handleSendMessage(e as any);
                   }
