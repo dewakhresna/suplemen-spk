@@ -14,7 +14,7 @@ export default function LogoutSection() {
           <div>
             <h2 className="text-2xl font-bold text-slate-900">Keluar dari akun?</h2>
             <p className="text-slate-500 mt-2">
-              Anda harus masuk kembali untuk melihat rumah favorit dan mengatur profil Anda.
+              Anda harus masuk kembali untuk melihat suplemen favorit dan mengatur profil Anda.
             </p>
           </div>
           <Button 

@@ -202,10 +202,10 @@ async updateProfile(req: IReqUser, res: Response) {
       const emailHtml = `
         <div style="font-family: Arial, sans-serif; padding: 20px; background-color: #f8fafc;">
           <div style="max-width: 500px; margin: 0 auto; background: white; padding: 30px; border-radius: 10px; text-align: center;">
-            <h2 style="color: #2563eb;">Reset Kata Sandi</h2>
+            <h2 style="color: #dc2626;">Reset Kata Sandi</h2>
             <p>Halo <b>${user.fullName}</b>,</p>
-            <p>Sistem kami telah mereset kata sandi Anda. Berikut adalah kata sandi sementara Anda untuk masuk ke EstatePrime:</p>
-            <div style="background-color: #f1f5f9; padding: 15px; font-size: 20px; font-weight: bold; letter-spacing: 2px; margin: 20px 0; border-radius: 8px;">
+            <p>Sistem kami telah mereset kata sandi Anda. Berikut adalah kata sandi sementara Anda untuk masuk ke Vital Prime:</p>
+            <div style="background-color: #fef2f2; padding: 15px; font-size: 20px; font-weight: bold; letter-spacing: 2px; margin: 20px 0; border-radius: 8px;">
               ${temporaryPassword}
             </div>
             <p>Segera masuk (login) menggunakan kata sandi di atas, dan <b>pastikan Anda langsung mengubahnya</b> di halaman Profil demi keamanan.</p>
@@ -216,7 +216,7 @@ async updateProfile(req: IReqUser, res: Response) {
       await sendMail({
         from: EMAIL_SMTP_USER,
         to: user.email,
-        subject: "Pemulihan Kata Sandi EstatePrime",
+        subject: "Pemulihan Kata Sandi Vital Prime",
         html: emailHtml,
       });
 

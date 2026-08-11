@@ -47,6 +47,6 @@ export const houseDetailData: HouseDetail = {
     name: "Sarah Wijayanto",
     avatar: "https://i.pravatar.cc/150?u=sarah",
     status: "Online",
-    agency: "EstatePrime Bali",
+    agency: "Vital Prime Bali",
   }
 };
