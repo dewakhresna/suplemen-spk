@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import { Groq } from "groq-sdk";
 import { hitungTopsis, Suplemen } from "../utils/topsis.js";
-import SupplementService from "../service/suplemen.service.js"; // Sesuaikan nama file service
+import SupplementService from "../service/suplemen.service.js";
 import { GROQ_API_KEY } from "../utils/env.js"; 
 
 const groq = new Groq({
@@ -22,7 +22,21 @@ export default {
         return res.status(400).json({ message: "Pesan wajib diisi" });
       }
 
-      // 2. Tarik data MENGGUNAKAN Filter Mutlak
+      // --- TAMPILAN CONSOLE: INPUT PENGGUNA ---
+      console.log("\n=========================================================");
+      console.log("📥 MENERIMA PESAN DARI PENGGUNA (LIVECHAT SUPLEMEN)");
+      console.log("=========================================================");
+      console.log(`💬 Pesan Pengguna : "${pesan}"`);
+      console.log("🎯 Hard Filter:");
+      console.table([{
+        "Harga Min": hargaMin || "Tidak dibatasi",
+        "Harga Max": hargaMax || "Tidak dibatasi",
+        "Kandungan Nutrisi Min": kandungan_nutrisiMin || "Tidak dibatasi",
+        "Kandungan Nutrisi Max": kandungan_nutrisiMax || "Tidak dibatasi"
+      }]);
+
+      // 2. Tarik data dari Database
+      console.log("\n🗃️ QUERY KE DATABASE BERDASARKAN FILTER...");
       const rawData = await SupplementService.getFilteredForChat({
         hargaMin, 
         hargaMax, 
@@ -30,7 +44,7 @@ export default {
         kandungan_nutrisiMax
       });
 
-      // 3. Mapping data mentah sesuai schema database Suplemen dan SuplemenDetail
+      // Mapping data mentah ke interface Suplemen
       const dataSuplemen: Suplemen[] = rawData.map((r: any) => ({
         id: r.id,
         nama: r.nama ?? "Tanpa Nama",
@@ -42,8 +56,21 @@ export default {
         imageUrl: r.SuplemenDetail?.image_1,
       }));
 
+      // --- TAMPILAN CONSOLE: HASIL FILTER ---
+      console.log(`✅ Ditemukan ${dataSuplemen.length} suplemen yang sesuai Hard Filter.`);
+      if (dataSuplemen.length > 0) {
+        console.log("Daftar Suplemen yang lolos untuk dihitung TOPSIS:");
+        console.table(dataSuplemen.map(r => ({
+          ID: r.id, 
+          Nama_Suplemen: r.nama, 
+          Harga: r.c1_harga,
+          Kandungan: r.c3_kandungan_nutrisi
+        })));
+      }
+
       // Case Data Kosong
       if (dataSuplemen.length === 0) {
+        console.log("❌ Eksekusi dihentikan karena tidak ada data yang sesuai filter (404 Not Found).\n");
         return res.status(404).json({ 
           status: "not_found",
           message: "Maaf, tidak ada suplemen yang sesuai dengan kriteria filter Anda. Cobalah memperluas rentang harga atau batas kandungan nutrisi.",
@@ -51,7 +78,8 @@ export default {
         });
       }
 
-      // 4. Ekstraksi Bobot & Generate Balasan via AI Groq
+      // 3. Ekstraksi Bobot & Generate Balasan via AI Groq
+      console.log("\n🤖 MENGIRIM PESAN KE AI UNTUK EKSTRAKSI BOBOT...");
       const completion = await groq.chat.completions.create({
         messages: [
           {
@@ -87,9 +115,9 @@ export default {
       let aiResponse;
       try {
         aiResponse = JSON.parse(completion.choices[0].message.content || "{}");
+        console.log("✅ Berhasil mengekstrak JSON dari respon AI.");
       } catch (e) {
-        console.error("Gagal mem-parsing JSON dari Groq:", e);
-        // Fallback jika AI gagal merespons sesuai format JSON
+        console.error("❌ Gagal mem-parsing JSON dari Groq:", e);
         aiResponse = {
           balasan_chat: "Berikut adalah suplemen terbaik yang berhasil saya rangkum untuk Anda.",
           bobot: { C1_Harga: 3, C2_Ulasan_Negatif: 3, C3_Kandungan_Nutrisi: 3, C4_Efektivitas_Manfaat: 3 }
@@ -99,16 +127,19 @@ export default {
       const bobotUser = aiResponse.bobot;
       const pesanBalasan = aiResponse.balasan_chat;
 
+      // 4. Proses Eksekusi TOPSIS
       let hasilRekomendasi = [];
       
-      // Case Hanya 1 Data Tersisa
       if (dataSuplemen.length === 1) {
+        console.log("\n⚠️ [INFO] Hanya 1 data yang lolos filter. Melewati perhitungan TOPSIS dan memberikan skor absolut 1.0000.");
         hasilRekomendasi = [{ ...dataSuplemen[0], skor: "1.0000" }];
       } else {
+        console.log("\n⚙️ MENERUSKAN DATA DAN BOBOT AI KE ALGORITMA TOPSIS...");
         hasilRekomendasi = hitungTopsis(dataSuplemen, bobotUser);
       }
 
       // 5. Respon Final ke Frontend
+      console.log("\n🚀 MENGIRIM 3 REKOMENDASI TERATAS UNTUK DITAMPILKAN KE FRONTEND\n");
       return res.status(200).json({
         status: "success",
         data: {
@@ -118,7 +149,7 @@ export default {
         },
       });
     } catch (error: any) {
-      console.error(error);
+      console.error("❌ Terjadi Kesalahan di Controller Chat:", error);
       return res.status(500).json({ status: "error", message: error.message });
     }
   },
