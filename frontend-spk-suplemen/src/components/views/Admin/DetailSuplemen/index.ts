@@ -1,3 +1,3 @@
-import DetailHouse from "./DetailHouse";
+import DetailSuplemen from "./DetailSuplemen";
 
-export default DetailHouse;
+export default DetailSuplemen;
