@@ -107,7 +107,7 @@ export default {
             content: pesan,
           },
         ],
-        model: "llama-3.3-70b-versatile",
+        model: "groq/compound",
         response_format: { type: "json_object" }, 
         temperature: 0.2, 
       });

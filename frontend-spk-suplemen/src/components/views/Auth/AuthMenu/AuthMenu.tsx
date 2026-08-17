@@ -66,7 +66,7 @@ export default function AuthMenu() {
           </DropdownItem>
           
           <DropdownItem key="settings" href="/profile" as={Link} startContent={<User size={18} />}>
-            Menur Profil
+            Menu Profil
           </DropdownItem>
           
           <DropdownItem 

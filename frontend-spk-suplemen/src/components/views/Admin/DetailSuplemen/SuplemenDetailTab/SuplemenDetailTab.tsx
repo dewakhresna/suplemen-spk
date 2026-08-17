@@ -15,6 +15,7 @@ import { Controller } from "react-hook-form";
 import { useEffect } from "react";
 import { FiImage, FiInfo } from "react-icons/fi";
 import { MdOutlineStorefront } from "react-icons/md";
+import environment from "@/config/environment";
 
 export interface ISuplemenDetail {
   suplemen_id?: number;
@@ -60,7 +61,9 @@ const SuplemenDetailTab = (props: PropTypes) => {
 
     if (typeof imagePath === "string") {
       if (imagePath.startsWith("http")) return imagePath;
-      return `http://localhost:5000${imagePath}`;
+      const baseUrl =
+        environment.Domain?.replace(/\/$/, "") || "http://localhost:5000";
+      return `${baseUrl}${imagePath}`;
     }
     if (imagePath && (imagePath as FileList).length > 0) {
       return URL.createObjectURL((imagePath as FileList)[0]);
