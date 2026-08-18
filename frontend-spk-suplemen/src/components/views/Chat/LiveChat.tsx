@@ -42,19 +42,19 @@ export default function LiveChat() {
     let max = "";
 
     switch (val) {
-      case "<100k":
-        max = "100000";
-        break;
-      case "100k-300k":
-        min = "100000";
+      case "<300k":
         max = "300000";
         break;
-      case "300k-500k":
+      case "300k-600k":
         min = "300000";
-        max = "500000";
+        max = "600000";
         break;
-      case ">500k":
-        min = "500000";
+      case "600k-1000k":
+        min = "600000";
+        max = "1000000";
+        break;
+      case ">1000k":
+        min = "1000000";
         break;
       default:
         min = "";
@@ -72,19 +72,16 @@ export default function LiveChat() {
     let max = "";
 
     switch (val) {
-      case "<10":
-        max = "10"; 
+      case "20-23":
+        min = "20";
+        max = "23";
         break;
-      case "10-30":
-        min = "10";
-        max = "30";
-        break;
-      case "30-50":
+      case "23-26":
         min = "30";
         max = "50";
         break;
-      case ">50":
-        min = "50";
+      case ">26":
+        min = "26";
         break;
       default:
         min = "";
@@ -188,10 +185,10 @@ export default function LiveChat() {
                 trigger: "bg-slate-50 shadow-none border border-slate-200",
               }}
             >
-              <SelectItem key="<100k">Di bawah Rp 100.000</SelectItem>
-              <SelectItem key="100k-300k">Rp 100rb - 300rb</SelectItem>
-              <SelectItem key="300k-500k">Rp 300rb - 500rb</SelectItem>
-              <SelectItem key=">500k">Lebih dari Rp 500.000</SelectItem>
+              <SelectItem key="<300k">Di bawah Rp 300.000</SelectItem>
+              <SelectItem key="300k-600k">Rp 300rb - 600rb</SelectItem>
+              <SelectItem key="600k-1000k">Rp 600rb - 1000.000rb</SelectItem>
+              <SelectItem key=">1000k">Lebih dari Rp 1000.000</SelectItem>
             </Select>
 
             <Select

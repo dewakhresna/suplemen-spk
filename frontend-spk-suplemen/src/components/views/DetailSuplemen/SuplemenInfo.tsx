@@ -41,7 +41,7 @@ export default function SuplemenInfo({ suplemen }: { suplemen: SuplemenData }) {
             <Activity size={24} />
           </div>
           <span className="text-lg font-bold text-slate-800">
-            {suplemen.c3_kandungan_nutrisi} <span className="text-sm font-medium">Skor</span>
+            {suplemen.c3_kandungan_nutrisi}
           </span>
           <span className="text-sm font-medium text-slate-500 text-center">Kandungan Nutrisi</span>
         </div>
@@ -51,7 +51,7 @@ export default function SuplemenInfo({ suplemen }: { suplemen: SuplemenData }) {
             <ShieldCheck size={24} />
           </div>
           <span className="text-lg font-bold text-slate-800">
-            {suplemen.c4_efektivitas_manfaat} <span className="text-sm font-medium">Skor</span>
+            {suplemen.c4_efektivitas_manfaat}
           </span>
           <span className="text-sm font-medium text-slate-500 text-center">Efektivitas Manfaat</span>
         </div>
