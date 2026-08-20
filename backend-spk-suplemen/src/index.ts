@@ -8,7 +8,6 @@ import "./models/favorite.model.js";
 import "./models/suplemen.model.js";
 import "./models/suplemen_detail.model.js";
 
-
 const app = express();
 
 app.use(cors());

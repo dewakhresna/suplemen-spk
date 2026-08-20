@@ -201,10 +201,9 @@ export default function LiveChat() {
                 trigger: "bg-slate-50 shadow-none border border-slate-200",
               }}
             >
-              <SelectItem key="<10">Di bawah 10 gr/mg</SelectItem>
-              <SelectItem key="10-30">10 - 30 gr/mg</SelectItem>
-              <SelectItem key="30-50">30 - 50 gr/mg</SelectItem>
-              <SelectItem key=">50">Lebih dari 50 gr/mg</SelectItem>
+              <SelectItem key="10-30">20 - 23</SelectItem>
+              <SelectItem key="30-50">23 - 26</SelectItem>
+              <SelectItem key=">50">Lebih dari 26</SelectItem>
             </Select>
           </div>
 
